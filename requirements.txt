@@ -1,7 +1,7 @@
-streamlit 
-crewai 
+streamlit
+crewai
 crewai_tools
-python-dotenv 
-langchain_openai
+python-dotenv
+langchain-llama
 langchain_community
 python-docx

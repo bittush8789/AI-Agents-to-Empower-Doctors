@@ -1,6 +1,6 @@
 # AI Agents to Empower Doctors
 
-This is a Streamlit-based web application that leverages AI agents to provide medical diagnosis and treatment recommendations. The application utilizes OpenAI's GPT-3.5-turbo-16k model to analyze patient symptoms and medical history, and provide preliminary diagnosis and treatment plans.
+This Streamlit-based web application leverages AI agents to provide medical diagnosis and treatment recommendations. The application utilizes the LLama model to analyze patient symptoms and medical history and provide preliminary diagnosis and treatment.
 
 ## Features
 
@@ -26,8 +26,9 @@ This is a Streamlit-based web application that leverages AI agents to provide me
 3. Create a .env file and add the following environment variables:
     ```bash
 
-   OPENAI_API_KEY=<your_openai_api_key>
+   GROQ_API_KEY=<your_groq_api_key>
    SERPER_API_KEY=<your_serper_api_key>
+
 
 Usage
 1. Run the Streamlit app:

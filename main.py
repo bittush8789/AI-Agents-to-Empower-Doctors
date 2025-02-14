@@ -1,9 +1,9 @@
 import streamlit as st
 from crewai import Agent, Task, Crew, Process
 import os
-from crewai_tools import ScrapeWebsiteTool, SerperDevTool
+from crewai_tools import ScrapeWebsiteTool, SerperDevTool, GroqAPIKeyTool
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+from langchain_llama import LlamaModel
 from docx import Document
 from io import BytesIO
 import base64
@@ -11,10 +11,9 @@ import base64
 # Load environment variables from a .env file
 load_dotenv()
 
-# Set API keys for LLM and tools
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+# Set API keys for tools
+os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
 os.environ["SERPER_API_KEY"] = os.getenv("SERPER_API_KEY")
-
 
 def generate_docx(result):
     """
@@ -49,13 +48,14 @@ age = st.number_input('Enter Age', min_value=0, max_value=120, value=25)
 symptoms = st.text_area('Enter Symptoms', 'e.g., fever, cough, headache')
 medical_history = st.text_area('Enter Medical History', 'e.g., diabetes, hypertension')
 
-# Initialize tools for web scraping and search
+# Initialize tools for web scraping, search, and Groq API
 search_tool = SerperDevTool()
 scrape_tool = ScrapeWebsiteTool()
+groq_tool = GroqAPIKeyTool(api_key=os.getenv("GROQ_API_KEY"))
 
 # Initialize the language model
-llm = ChatOpenAI(
-    model="gpt-3.5-turbo-16k",
+llm = LlamaModel(
+    model="llama-2-13b",
     temperature=0.1,
     max_tokens=8000
 )
@@ -67,7 +67,7 @@ diagnostician = Agent(
     backstory="This agent specializes in diagnosing medical conditions based on patient-reported symptoms and medical history. It uses advanced algorithms and medical knowledge to identify potential health issues.",
     verbose=True,
     allow_delegation=False,
-    tools=[search_tool, scrape_tool],
+    tools=[search_tool, scrape_tool, groq_tool],
     llm=llm
 )
 
@@ -78,7 +78,7 @@ treatment_advisor = Agent(
     backstory="This agent specializes in creating treatment plans tailored to individual patient needs. It considers the diagnosis, patient history, and current best practices in medicine to recommend effective treatments.",
     verbose=True,
     allow_delegation=False,
-    tools=[search_tool, scrape_tool],
+    tools=[search_tool, scrape_tool, groq_tool],
     llm=llm
 )
 
