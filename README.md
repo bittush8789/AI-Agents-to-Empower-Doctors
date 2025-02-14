@@ -50,3 +50,5 @@ Enter medical history
 5. Wait for the AI agents to analyze the information and generate the recommendations.
 
 6. Download the Word document containing the diagnosis and treatment plan.
+
+Hash node blog link : https://bittublog.hashnode.dev/ai-powered-healthcare-assistant-with-streamlit-and-crewai
